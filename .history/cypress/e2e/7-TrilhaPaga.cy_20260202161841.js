@@ -10,29 +10,28 @@ Cypress.on('uncaught:exception', (err) => {
 describe("Teste - Login", () => {
     beforeEach(() => {
         //Entra na página de login
-            cy.visit("https://www.hml.lector.live/lector_suporte/showcase/2257");
-            cy.contains("button", "Entrar").click();
+            cy.visit("https://www.hml.lector.live/esmp/subscribe/login");
     
         //Faz login
-            cy.get('[style="z-index: 26;"] > :nth-child(1) > :nth-child(1) > .popup > :nth-child(1) > .ng-pristine').type("qualidade@lectortec.com.br");
-            cy.get("#login_password_navbar").type("c8d593QGXOkjRjC");
-            cy.get(".popup").contains("button", "Entrar").click();
+            cy.get('[name="login_username"]').type("qualidade@lectortec.com.br");
+            cy.get('[name="login_password"]').type("c8d593QGXOkjRjC");
+            cy.get('#btn-entrar').click();
         });
 
     context("Trilha > trilha paga ", () => {
 
-    it.only("Testar cupom na trilha paga", () => {
+    it("Testar cupom na trilha paga", () => {
 
         //Seleciona a trilha paga
-            cy.get(':nth-child(3) > .carousel-container > .CARD_THEME3 > .showcase-card-carousel-track-container > [data-page-idx="0"] > :nth-child(1) > .card-container > [ng-init="course = content.entity"] > a.ng-scope > .showcase-card-container').click()
+            cy.get('[data-page-idx="1"] > :nth-child(1) > .card-container > [ng-init="trail = content.entity"] > a.ng-scope > .showcase-card-container').click();
             cy.wait(4000)
 
         //Comprar a trilha
-            cy.get(':nth-child(2) > .classes-actions > :nth-child(1) > .btn-swipe-accent').click();
+            cy.get('.default-gap > div.ng-scope > .btn-swipe-accent > ng-transclude').click();
             cy.wait(4000)
 
         //Adicionar cupom
-            cy.get('.modal > .modal-body > table > tbody > :nth-child(2) > :nth-child(2) > .button-input > .ng-valid').type('Teste2');
+            cy.get('.modal > .modal-body > table > tbody > :nth-child(2) > :nth-child(2) > .button-input > .ng-pristine').type('Teste1');
 
         //Aplicar cupom
             cy.get('.modal > .modal-body > table > tbody > :nth-child(2) > :nth-child(2) > .button-input > .btn-swipe-accent').click();

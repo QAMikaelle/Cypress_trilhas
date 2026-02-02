@@ -42,7 +42,7 @@ describe("Teste - Login", () => {
     cy.get('[switch="modal.coupons"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent').click(); 
     });
 
-    it("Filtros - Cupom", () => {
+    it.only("Filtros - Cupom", () => {
 
     //Cadastros > Cupons
     cy.get('[title="Cadastros"] > .sideitem').click(); //Clica em Cadastros
@@ -50,7 +50,7 @@ describe("Teste - Login", () => {
     cy.wait(2000)
     
     //Fixar coluna
-    cy.get('#sidenavPin > .icon-push-pin').click(); //Clica em fixar coluna
+    cy.get('.icon-left-collapse').click(); //Clica em fixar coluna
 
     //Pesquisar cupom 
     cy.get('.title-bar > .multiselect > .ng-pristine').type("Teste1");

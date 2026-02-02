@@ -42,19 +42,15 @@ describe("Teste - Login", () => {
     cy.get('[switch="modal.coupons"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent').click(); 
     });
 
-    it("Filtros - Cupom", () => {
+    it.only("Filtros - Cupom", () => {
 
     //Cadastros > Cupons
     cy.get('[title="Cadastros"] > .sideitem').click(); //Clica em Cadastros
     cy.get(':nth-child(13) > a > .w-100').click(); //Clica em cupons
     cy.wait(2000)
     
-    //Fixar coluna
-    cy.get('#sidenavPin > .icon-push-pin').click(); //Clica em fixar coluna
-
     //Pesquisar cupom 
     cy.get('.title-bar > .multiselect > .ng-pristine').type("Teste1");
-    cy.get('.title-bar > .multiselect > .btn').click(); //Clica para selecionar o cupom pesquisado
 
     //Exportar lista de cupons
     cy.get('.buttons-copy').click(); //Clica em copiar
@@ -72,9 +68,9 @@ describe("Teste - Login", () => {
     cy.get('.column > :nth-child(3) > .w-100').type('CupomTeste3'); //Código do cupom
     cy.get(':nth-child(7) > .number-with-unit > .ng-pristine').type('5'); //Compra mínima
     cy.get(':nth-child(8) > .ng-isolate-scope > .multiselect > .border > :nth-child(1) > .ui-select-search').type('Teste1'); //Selecionar treinamento
-    cy.get('.ui-select-choices-row-inner > .ng-binding').click(); //Clica no treinamento selecionado
+    cy.get('#ui-select-choices-row-35-0').click(); //Clica no treinamento selecionado
     cy.get(':nth-child(9) > .ng-isolate-scope > .multiselect > .border > :nth-child(1) > .ui-select-search').type('trilha'); //Selecionar trilha
-    cy.get('#ui-select-choices-row-37-0 > .ui-select-choices-row-inner > .ng-binding').click(); //Clica na trilha selecionada
+    cy.get('#ui-select-choices-row-36-0 > .ui-select-choices-row-inner > .ng-binding').click(); //Clica na trilha selecionada
     cy.get('[switch="modal.coupons"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent').click(); //Clica em salvar cupom
 
     });
