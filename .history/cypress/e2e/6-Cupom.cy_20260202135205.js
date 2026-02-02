@@ -10,12 +10,13 @@ Cypress.on('uncaught:exception', (err) => {
 describe("Teste - Login", () => {
     beforeEach(() => {
         //Entra na página de login
-            cy.visit("https://www.hml.lector.live/esmp/subscribe/login");
+            cy.visit("https://www.hml.lector.live/lector_suporte/showcase/2257");
+            cy.contains("button", "Entrar").click();
     
         //Faz login
-            cy.get('[name="login_username"]').type("qualidade@lectortec.com.br");
-            cy.get('[name="login_password"]').type("c8d593QGXOkjRjC");
-            cy.get('#btn-entrar').click();
+            cy.get('[style="z-index: 26;"] > :nth-child(1) > :nth-child(1) > .popup > :nth-child(1) > .ng-pristine').type("qualidade@lectortec.com.br");
+            cy.get("#login_password_navbar").type("c8d593QGXOkjRjC");
+            cy.get(".popup").contains("button", "Entrar").click();
         });
 
     context("Trilha > Cupom ", () => {
@@ -24,8 +25,8 @@ describe("Teste - Login", () => {
 
     //Editar cupom criado
     cy.get('[title="Cadastros"] > .sideitem').click(); //Clica em Cadastros
-    cy.get(':nth-child(13) > a > .w-100').click(); //Clica em cupons
-    cy.get('#\\32 4').click(); //Clica no cupom criado
+    cy.get(':nth-child(14) > a > .w-100').click(); //Clica em cupons
+    cy.get('#\\32 47').click(); //Clica no cupom criado
 
     //Alterar quantidade do cupom
     cy.get('[model="coupon.quantity"] input[type="number"]')
@@ -42,11 +43,11 @@ describe("Teste - Login", () => {
     cy.get('[switch="modal.coupons"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent').click(); 
     });
 
-    it("Filtros - Cupom", () => {
+    it.only("Filtros - Cupom", () => {
 
     //Cadastros > Cupons
     cy.get('[title="Cadastros"] > .sideitem').click(); //Clica em Cadastros
-    cy.get(':nth-child(13) > a > .w-100').click(); //Clica em cupons
+    cy.get(':nth-child(14) > a > .w-100').click(); //Clica em cupons
     cy.wait(2000)
     
     //Pesquisar cupom 
@@ -68,9 +69,9 @@ describe("Teste - Login", () => {
     cy.get('.column > :nth-child(3) > .w-100').type('CupomTeste3'); //Código do cupom
     cy.get(':nth-child(7) > .number-with-unit > .ng-pristine').type('5'); //Compra mínima
     cy.get(':nth-child(8) > .ng-isolate-scope > .multiselect > .border > :nth-child(1) > .ui-select-search').type('Teste1'); //Selecionar treinamento
-    cy.get('#ui-select-choices-row-35-0').click(); //Clica no treinamento selecionado
+    cy.get('#ui-select-choices-row-36-0').click(); //Clica no treinamento selecionado
     cy.get(':nth-child(9) > .ng-isolate-scope > .multiselect > .border > :nth-child(1) > .ui-select-search').type('trilha'); //Selecionar trilha
-    cy.get('#ui-select-choices-row-36-0 > .ui-select-choices-row-inner > .ng-binding').click(); //Clica na trilha selecionada
+    cy.get('#ui-select-choices-row-37-0 > .ui-select-choices-row-inner > .ng-binding').click(); //Clica na trilha selecionada
     cy.get('[switch="modal.coupons"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent').click(); //Clica em salvar cupom
 
     });

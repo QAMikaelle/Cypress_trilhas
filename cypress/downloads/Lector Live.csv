@@ -1,2 +1,3 @@
 "Nome","Valor","Código","Quantidade","Utilizados","Início","Fim","Compra mínima","Ações"
 "Teste1","50%","Teste1","1","0","23/01/2026 08:00:00","23/01/2026 18:00:00","R$ 5.00",""
+"CupomTeste2","R$ 2.00","CupomTeste2","","0","-","-","R$ 5.00",""
