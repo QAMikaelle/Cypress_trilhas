@@ -35,12 +35,9 @@ describe("Teste - Login", () => {
         //Clica em comprar trilha
         cy.get('.default-gap > div.ng-scope > .btn-swipe-accent > ng-transclude > .ng-binding').click();
 
-        //Adicionar forma de pagamento pix
-        cy.get('.mb-5 > .icon-radio').click();
-
         //Finalizar compra
         cy.get('[ng-show="!sicredi.paymentOption"] > .btn-swipe-accent').click();
-        cy.wait(5000);
+        
 
         
     });
@@ -59,10 +56,7 @@ describe("Teste - Login", () => {
         //Aplicar cupom
         cy.get('.w-50 > .button-input > .btn-swipe-accent > ng-transclude > .ng-binding').click();
 
-        //Selecionar forma de pagamento pix
-        cy.get('.mb-5 > .icon-radio').click();
-
-        //Finalizar compra
+        //Adicionar forma de pagamento pix
         cy.get('[ng-show="!sicredi.paymentOption"] > .btn-swipe-accent').click();
 
         
@@ -82,10 +76,7 @@ describe("Teste - Login", () => {
         //Aplicar cupom
         cy.get('.w-50 > .button-input > .btn-swipe-accent > ng-transclude > .ng-binding').click();
 
-        //Selecionar forma de pagamento cartão
-        cy.get(':nth-child(2) > .icon-radio').click();
-
-        //Finalizar compra
+        //Adicionar forma de pagamento pix
         cy.get('[ng-show="!sicredi.paymentOption"] > .btn-swipe-accent').click();
 
         
