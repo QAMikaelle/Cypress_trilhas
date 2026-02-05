@@ -6,7 +6,7 @@ Cypress.on('uncaught:exception', (err) => {
     }
     });
 
-describe.only("Teste - Login", () => {
+describe("Teste - Login", () => {
     beforeEach(() => {
         //Entra na página de login
             cy.visit("https://www.hml.lector.live/ext/showcase/2289");
@@ -16,8 +16,8 @@ describe.only("Teste - Login", () => {
             .should('contain.text', 'Entrar')
             .click();
 
-            cy.get('[style="z-index: 26;"] > :nth-child(1) > :nth-child(1) > .popup > :nth-child(1) > .ng-pristine').type("qualidade@lectortec.com.br");
-            cy.get('[name="login_password_navbar"]').type("c8d593QGXOkjRjC");
+            cy.get('[style="z-index: 26;"] > :nth-child(1) > :nth-child(1) > .popup > :nth-child(1) > .ng-pristine').type("ecycen@mailto.plus");
+            cy.get('[name="login_password_navbar"]').type("123");
             cy.get('.popup:visible')
             .contains('button', 'Entrar')
             .should('be.visible')
@@ -30,7 +30,7 @@ describe.only("Teste - Login", () => {
     it("Trilha paga", () => {
         
         //Seleciona a trilha paga
-        cy.get('[data-page-idx="0"] > :nth-child(1) > .card-container > [ng-init="trail = content.entity"] > a.ng-scope > .showcase-card-container').click();
+        cy.get(':nth-child(1) > .card-container > [ng-init="trail = content.entity"] > a.ng-scope > .showcase-card-container').click();
 
         //Clica em comprar trilha
         cy.get('.default-gap > div.ng-scope > .btn-swipe-accent > ng-transclude > .ng-binding').click();

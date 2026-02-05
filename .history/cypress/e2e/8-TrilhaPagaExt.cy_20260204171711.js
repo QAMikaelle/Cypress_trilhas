@@ -6,7 +6,7 @@ Cypress.on('uncaught:exception', (err) => {
     }
     });
 
-describe.only("Teste - Login", () => {
+describe("Teste - Login", () => {
     beforeEach(() => {
         //Entra na página de login
             cy.visit("https://www.hml.lector.live/ext/showcase/2289");

@@ -33,7 +33,6 @@ describe("Teste - Login", () => {
             cy.get('[ng-show="modal.checkout"] > .modal > .content-box-footer > .btn-swipe-accent').click();
 
         //Fechar boleto 
-            cy.get('modal-header > div > .btn')
 
     });
 
@@ -52,9 +51,6 @@ describe("Teste - Login", () => {
         //Finalizar compra
             cy.get('[ng-show="modal.checkout"] > .modal > .content-box-footer > .btn-swipe-accent').click();
     
-        //Fechar boleto 
-            cy.get('modal-header > div > .btn').click();
-
     });
     
     });

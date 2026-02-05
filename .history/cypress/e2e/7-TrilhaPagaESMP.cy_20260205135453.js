@@ -19,7 +19,7 @@ describe("Teste - Login", () => {
 
     context("Trilha > trilha paga ", () => {
 
-    it("Trilha paga", () => {
+    it.only("Trilha paga", () => {
 
         //Seleciona a trilha paga
             cy.get('[data-page-idx="0"] > :nth-child(1) > .card-container > [ng-init="course = content.entity"] > a.ng-scope > .showcase-card-container').click();
@@ -33,7 +33,6 @@ describe("Teste - Login", () => {
             cy.get('[ng-show="modal.checkout"] > .modal > .content-box-footer > .btn-swipe-accent').click();
 
         //Fechar boleto 
-            cy.get('modal-header > div > .btn')
 
     });
 
@@ -46,15 +45,12 @@ describe("Teste - Login", () => {
         cy.wait(4000)
 
         //Comprar a trilha
-            cy.get('.classes-actions > :nth-child(1) > .btn-swipe-accent > ng-transclude > :nth-child(1)').click();
+            cy.get(`[ng-if="getPurchaseStatus(class) == 'SUBSCRIBE_CLASS'"]`).click();
             cy.wait(4000)
 
         //Finalizar compra
             cy.get('[ng-show="modal.checkout"] > .modal > .content-box-footer > .btn-swipe-accent').click();
     
-        //Fechar boleto 
-            cy.get('modal-header > div > .btn').click();
-
     });
     
     });
