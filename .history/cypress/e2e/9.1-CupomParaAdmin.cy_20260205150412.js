@@ -22,13 +22,13 @@ describe.only("Teste - Login", () => {
     //Testa cupom para admin
         it("Teste cupom para admin", () => {
             cy.get('[title="Relatórios"] > .sideitem').click();
-            cy.get('#sidenavPin > .icon-push-pin').click();
-            cy.wait(1000);
-            cy.get('[data-nodeid="28"] > .glyphicon').click();
+            cy.get('#sidenavPin > .icon-push-pin')
+                .filter(':visible')
+                .click();
 
             cy.get('#sidenavPin')
                 .should('be.visible')
-                .click();
+               .click();
 
             cy.get('[data-nodeid="28"]')
                 .first()

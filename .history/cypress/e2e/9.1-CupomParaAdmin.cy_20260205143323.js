@@ -21,24 +21,14 @@ describe.only("Teste - Login", () => {
 
     //Testa cupom para admin
         it("Teste cupom para admin", () => {
-            cy.get('[title="Relatórios"] > .sideitem').click();
-            cy.get('#sidenavPin > .icon-push-pin').click();
-            cy.wait(1000);
-            cy.get('[data-nodeid="28"] > .glyphicon').click();
-
-            cy.get('#sidenavPin')
-                .should('be.visible')
-                .click();
-
-            cy.get('[data-nodeid="28"]')
-                .first()
-                .scrollIntoView()
-                .should('be.visible')
-                .parents('li') // sobe até o nó da árvore
-                .click();
-
-
-      
-});
-});
+            cy.wait(5000);
+            cy.get('.user-menu-xs').click();
+            cy.get('.dropdown-menu > :nth-child(3) > a').click();
+            cy.get('.nav > :nth-child(3) > a').click();
+            cy.get('.coupon-code-input').type("CUPOMADMIN10");
+            cy.get('.apply-coupon-button').click();
+            cy.get('.coupon-success-message').should('contain.text', 'Cupom aplicado com sucesso');
+    
+    });
   }); 
+});

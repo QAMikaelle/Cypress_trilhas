@@ -22,23 +22,22 @@ describe.only("Teste - Login", () => {
     //Testa cupom para admin
         it("Teste cupom para admin", () => {
             cy.get('[title="Relatórios"] > .sideitem').click();
-            cy.get('#sidenavPin > .icon-push-pin').click();
-            cy.wait(1000);
-            cy.get('[data-nodeid="28"] > .glyphicon').click();
-
-            cy.get('#sidenavPin')
-                .should('be.visible')
+            cy.get('.icon-left-expand').click();
+            cy.get('#sidenavPin > .icon-push-pin')
+                .filter(':visible')
                 .click();
 
-            cy.get('[data-nodeid="28"]')
+            // rola o menu para baixo e tenta achar o node
+            cy.get(MENU_SCROLL)
+                .should('exist')
+                .scrollTo('bottom', { duration: 400 });
+
+            cy.get(NODE)
+                .filter(':visible')
                 .first()
-                .scrollIntoView()
-                .should('be.visible')
-                .parents('li') // sobe até o nó da árvore
-                .click();
-
-
-      
-});
-});
+                .scrollIntoView({ block: 'center' })
+                .click({ force: true });
+    
+    });
   }); 
+});
