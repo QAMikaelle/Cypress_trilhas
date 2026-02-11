@@ -35,23 +35,23 @@ describe("Teste - Login", () => {
     cy.get('.date-range-popup > .btn-swipe-lgray').should('be.visible').click();
 
     //Pesquisar usuario
-    cy.get(':nth-child(1) > div.ng-scope > .text-filter > .multiselect > .ng-pristine').type('mikaelle'); // digitar nome do usuário
-    cy.get('.advanced-filters > .end > .btn-swipe-accent').should('be.visible').click(); // clicar em aplicar filtros
+    cy.get(':nth-child(1) > div.ng-scope > .text-filter > .multiselect > .ng-pristine').type('mikaelle');
+    cy.get('.advanced-filters > .end > .btn-swipe-accent').should('be.visible').click();
 
     //analise financeira
-    cy.get(':nth-child(1) > .actionsColumn > .btn-swipe-accent').should('be.visible').click(); // clicar em análise financeira
+    cy.get(':nth-child(1) > .actionsColumn > .btn-swipe-accent').should('be.visible').click();
 
     //alterar cupom
-    cy.get('.ph-5 > .middle > .btn-swipe-accent').should('be.visible').click(); // clicar em alterar cupom
-    cy.get('.modal-body > .ng-isolate-scope > .multiselect > .border > .ui-select-match > .btn-default').type('CUPOM10'); // digitar cupom
+    cy.get('.ph-5 > .middle > .btn-swipe-accent').should('be.visible').click();
+    cy.get('.modal-body > .ng-isolate-scope > .multiselect > .border > .ui-select-match > .btn-default').type('CUPOM10');
     cy.wait(1000);
-    cy.get('.ui-select-highlight').should('be.visible').click(); // clicar no cupom sugerido
-    cy.get('[ng-if="financialAnalysis.purchaseCouponModal"] > .modal > .content-box-footer > .btn-swipe-accent').should('be.visible').click(); // clicar em salvar cupom
+    cy.get('.ui-select-highlight').should('be.visible').click();
+    cy.get('[ng-if="financialAnalysis.purchaseCouponModal"] > .modal > .content-box-footer > .btn-swipe-accent').should('be.visible').click();
 
     //alterar emissão
     cy.get(':nth-child(8) > .btn-swipe-accent').should('be.visible').click(); // clicar em alterar emissão
     cy.get('.ng-scope > .bootstrap-datetime > .datetimepicker').should('be.visible').click(); // clicar no campo de data
-    cy.get('.table-condensed > tbody > :nth-child(3) > :nth-child(4)').click(); // clicar no dia 11
+    cy.get('.table-condensed > tbody > :nth-child(3) > :nth-child(5)').click(); // clicar no dia 12
     cy.get('.datetimepicker-hours > .table-condensed > tbody > tr > td > :nth-child(9)').should('be.visible').click(); // clicar na hora 18
     cy.get('.datetimepicker-minutes > .table-condensed > tbody > tr > td > :nth-child(1)').should('be.visible').click(); // clicar nos minutos 00
     cy.get('[ng-if="financialAnalysis.updateInvoiceFieldModal"] > .modal > .content-box-footer > .btn-swipe-accent').should('be.visible').click();2
