@@ -45,7 +45,6 @@ describe("Teste - Login", () => {
     cy.get('.ph-5 > .middle > .btn-swipe-accent').should('be.visible').click();
     cy.get('.modal-body > .ng-isolate-scope > .multiselect > .border > .ui-select-match > .btn-default').type('CUPOM10');
     cy.wait(1000);
-    cy.get('.ui-select-highlight').should('be.visible').click();
     cy.get('[ng-if="financialAnalysis.purchaseCouponModal"] > .modal > .content-box-footer > .btn-swipe-accent').should('be.visible').click();
 
     //alterar emissão
