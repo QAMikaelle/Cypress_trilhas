@@ -21,7 +21,7 @@ describe("Teste - Login", () => {
     cy.url().should('not.include', '/subscribe/login');
   });
 
-  context("Fluxo análise financeira - ESMP", () => {
+  context("Fluxo análise financeira", () => {
     it("Teste cupom para admin", () => {
       // clica em Relatórios
     cy.get('[title="Relatórios"] > .sideitem').should('be.visible').click();
@@ -51,54 +51,31 @@ describe("Teste - Login", () => {
     //alterar emissão
     cy.get(':nth-child(8) > .btn-swipe-accent').should('be.visible').click(); // clicar em alterar emissão
     cy.get('.ng-scope > .bootstrap-datetime > .datetimepicker').should('be.visible').click(); // clicar no campo de data
-    cy.get('.table-condensed > tbody > :nth-child(5) > :nth-child(5)').click(); // clicar no dia 11
+    cy.get('.table-condensed > tbody > :nth-child(3) > :nth-child(4)').click(); // clicar no dia 11
     cy.get('.datetimepicker-hours > .table-condensed > tbody > tr > td > .active').should('be.visible').click(); // clicar na hora 18
     cy.get('.datetimepicker-minutes > .table-condensed > tbody > tr > td > :nth-child(7)').should('be.visible').click(); // clicar nos minutos 00
-    cy.get('[ng-if="financialAnalysis.updateInvoiceFieldModal"] > .modal > .content-box-footer > .btn-swipe-accent').should('be.visible').click();
+    cy.get('[ng-if="financialAnalysis.updateInvoiceFieldModal"] > .modal > .content-box-footer > .btn-swipe-accent').should('be.visible').click();2
 
-    // alterar vencimento
-    cy.get(':nth-child(9) > .btn-swipe-accent').should('be.visible').click();
+    //alterar vencimento
+    cy.get(':nth-child(9) > .btn-swipe-accent').should('be.visible').click(); // clicar em alterar vencimento
+    cy.get('.ng-scope > .bootstrap-datetime > .datetimepicker').should('be.visible').click(); // clicar no campo de data
 
-    // abre o datepicker do vencimento
-    cy.get('.ng-scope > .bootstrap-datetime > .datetimepicker')
-      .should('be.visible')
-      .click();
-
-    // pega o widget visível e trabalha dentro dele
-    cy.get('.datetimepicker-days')
-      .filter(':visible')
+    cy.get('.datetimepicker-days:visible')
+      .find('.next')
       .first()
-      .within(() => {
-        cy.get('.next').click();                 // próximo mês
-        cy.contains('td.day', /^10$/).click();   // dia 10 (exato)
-      });
+      .click(); // clicar no botão de próximo mês
 
-    // hora 08 (aceita 8, 08, 8:00, 08:00)
-cy.get('.datetimepicker-hours')
-  .filter(':visible')
-  .first()
-  .should('be.visible')
-  .within(() => {
-    cy.contains('td, span', /^(08|8)(:00)?$/).click();
-  });
-
-// minutos 00 (aceita 00, :00)
-cy.get('.datetimepicker-minutes')
-  .filter(':visible')
-  .first()
-  .should('be.visible')
-  .within(() => {
-    cy.contains('td, span', /^(08|8)(:00)?$/).click();
-  });
+    cy.get('[style="left: 354.793px; z-index: 2147483647; top: 127.481px; display: block;"] > .datetimepicker-days > .table-condensed > tbody > :nth-child(3) > :nth-child(3)').should('be.visible').click(); // clicar no dia 10
+    cy.get('[style="left: 354.793px; z-index: 2147483647; top: 127.481px; display: block;"] > .datetimepicker-hours > .table-condensed > tbody > tr > td > :nth-child(9)').should('be.visible').click(); // clicar na hora 08
+    cy.get('[style="left: 354.793px; z-index: 2147483647; top: 127.481px; display: block;"] > .datetimepicker-minutes > .table-condensed > tbody > tr > td > :nth-child(7)').should('be.visible').click(); // clicar nos minutos 00
+    cy.get('[ng-if="financialAnalysis.updateInvoiceFieldModal"] > .modal > .content-box-footer > .btn-swipe-accent').should('be.visible').click(); // clicar em salvar vencimento
 
 
-    // salvar vencimento
-    cy.get('[ng-if="financialAnalysis.updateInvoiceFieldModal"] > .modal > .content-box-footer > .btn-swipe-accent')
-      .should('be.visible')
-      .click();
+
+
 
 
       
 });
 });
-  });
+  }); 

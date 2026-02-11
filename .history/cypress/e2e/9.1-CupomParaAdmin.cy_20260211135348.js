@@ -21,7 +21,7 @@ describe("Teste - Login", () => {
     cy.url().should('not.include', '/subscribe/login');
   });
 
-  context("Fluxo análise financeira - ESMP", () => {
+  context("Fluxo análise financeira", () => {
     it("Teste cupom para admin", () => {
       // clica em Relatórios
     cy.get('[title="Relatórios"] > .sideitem').should('be.visible').click();
@@ -98,7 +98,10 @@ cy.get('.datetimepicker-minutes')
       .click();
 
 
+
+
+
       
 });
 });
-  });
+  }); 
