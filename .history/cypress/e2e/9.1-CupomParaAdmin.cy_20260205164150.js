@@ -44,16 +44,8 @@ describe("Teste - Login", () => {
     //alterar cupom
     cy.get('.ph-5 > .middle > .btn-swipe-accent').should('be.visible').click();
     cy.get('.modal-body > .ng-isolate-scope > .multiselect > .border > .ui-select-match > .btn-default').type('CUPOM10');
-    cy.wait(1000);
-    cy.get('#ui-select-choices-row-47-0').should('be.visible').click();
+    cy.get('#ui-select-choices-row-43-0 > .ui-select-choices-row-inner > .ng-binding').should('be.visible').click();
     cy.get('[ng-if="financialAnalysis.purchaseCouponModal"] > .modal > .content-box-footer > .btn-swipe-accent').should('be.visible').click();
-
-    //alterar emissão
-    cy.get(':nth-child(8) > .btn-swipe-accent').should('be.visible').click();
-    cy.get('.table-condensed > tbody > :nth-child(3) > :nth-child(5)').should('be.visible').click();
-    cy.get('.datetimepicker-hours > .table-condensed > tbody > tr > td > :nth-child(9)').should('be.visible').click();
-    cy.get('.datetimepicker-minutes > .table-condensed > tbody > tr > td > :nth-child(1)').should('be.visible').click();
-    cy.get('[ng-if="financialAnalysis.updateInvoiceFieldModal"] > .modal > .content-box-footer > .btn-swipe-accent').should('be.visible').click();
 
 
 
