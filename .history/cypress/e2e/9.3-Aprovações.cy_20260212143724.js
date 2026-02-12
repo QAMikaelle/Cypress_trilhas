@@ -270,7 +270,7 @@ describe("Teste - Login", () => {
 
         //seleciona o treinamento
         cy.get('[model="currentContent.course"] > .multiselect > .border > .ui-select-match > .btn-default').type('teste');
-        cy.get('#ui-select-choices-row-3-0').click();
+        cy.get('#ui-select-choices-row-38-0').click();
         cy.get('.start > .btn-swipe-accent > ng-transclude > .ng-binding').click();
 
         //adcicionar turma
@@ -403,6 +403,4 @@ describe("Teste - Login", () => {
 
     
 });
-
-
 });

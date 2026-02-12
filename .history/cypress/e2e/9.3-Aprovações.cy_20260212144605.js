@@ -64,7 +64,18 @@ describe("Teste - Login", () => {
 
         //seleciona o treinamento
         cy.get('[model="currentContent.course"] > .multiselect > .border > .ui-select-match > .btn-default').type('teste');
-        cy.get('#ui-select-choices-row-39-0').click();
+        
+        cy.get('[model="currentContent.course"] .ui-select-search')
+            .filter(':visible')
+            .first()
+            .type('Teste', { delay: 50 });
+
+        cy.get('.ui-select-choices-row')
+            .filter(':visible')
+            .first()
+            .click({ force: true });
+
+
         cy.get('.start > .btn-swipe-accent > ng-transclude > .ng-binding').click();
 
         //adcicionar turma
@@ -403,6 +414,4 @@ describe("Teste - Login", () => {
 
     
 });
-
-
 });
