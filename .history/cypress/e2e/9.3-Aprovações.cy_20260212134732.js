@@ -142,8 +142,8 @@ describe("Teste - Login", () => {
             .should('be.enabled')
             .focus()
             .clear({ force: true })
-            .type('Trilha Automação - paga sem aprovação', { delay: 50 })
-            .should('have.value', 'Trilha Automação - paga sem aprovação')
+            .type('Trilha Automação - paga com aprovação', { delay: 50 })
+            .should('have.value', 'Trilha Automação - paga com aprovação')
 
         //seleciona o código
         cy.get('input[ng-model="currentTrail.externalId"]')
@@ -241,8 +241,8 @@ describe("Teste - Login", () => {
             .should('be.enabled')
             .focus()
             .clear({ force: true })
-            .type('Trilha Automação - gratuita com aprovação', { delay: 50 })
-            .should('have.value', 'Trilha Automação - gratuita com aprovação')
+            .type('Trilha Automação - paga com aprovação', { delay: 50 })
+            .should('have.value', 'Trilha Automação - paga com aprovação')
 
         //seleciona o código
         cy.get('input[ng-model="currentTrail.externalId"]')
@@ -333,8 +333,8 @@ describe("Teste - Login", () => {
             .should('be.enabled')
             .focus()
             .clear({ force: true })
-            .type('Trilha Automação - gratuita sem aprovação', { delay: 50 })
-            .should('have.value', 'Trilha Automação - gratuita sem aprovação')
+            .type('Trilha Automação - paga com aprovação', { delay: 50 })
+            .should('have.value', 'Trilha Automação - paga com aprovação')
 
         //seleciona o código
         cy.get('input[ng-model="currentTrail.externalId"]')

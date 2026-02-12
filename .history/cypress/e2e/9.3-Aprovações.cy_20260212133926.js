@@ -142,8 +142,8 @@ describe("Teste - Login", () => {
             .should('be.enabled')
             .focus()
             .clear({ force: true })
-            .type('Trilha Automação - paga sem aprovação', { delay: 50 })
-            .should('have.value', 'Trilha Automação - paga sem aprovação')
+            .type('Trilha Automação - paga com aprovação', { delay: 50 })
+            .should('have.value', 'Trilha Automação - paga com aprovação')
 
         //seleciona o código
         cy.get('input[ng-model="currentTrail.externalId"]')
@@ -241,8 +241,8 @@ describe("Teste - Login", () => {
             .should('be.enabled')
             .focus()
             .clear({ force: true })
-            .type('Trilha Automação - gratuita com aprovação', { delay: 50 })
-            .should('have.value', 'Trilha Automação - gratuita com aprovação')
+            .type('Trilha Automação - paga com aprovação', { delay: 50 })
+            .should('have.value', 'Trilha Automação - paga com aprovação')
 
         //seleciona o código
         cy.get('input[ng-model="currentTrail.externalId"]')
@@ -299,6 +299,12 @@ describe("Teste - Login", () => {
         cy.get('.class-price > :nth-child(1) > .icon-checkbox').click();
 
 
+        // VENCIMENTO: clique no INPUT real (não no ícone)
+        // Primeiro tenta encontrar o checkbox dentro do bloco "Deixar em branco"
+        cy.contains('label, span, div', 'Deixar em branco')
+            .filter(':visible')
+            .click();
+
         //adicionar aprovação de gestor
         cy.contains('label.checkbox', 'Solicitar aprovação do gestor')
             .filter(':visible')
@@ -333,8 +339,8 @@ describe("Teste - Login", () => {
             .should('be.enabled')
             .focus()
             .clear({ force: true })
-            .type('Trilha Automação - gratuita sem aprovação', { delay: 50 })
-            .should('have.value', 'Trilha Automação - gratuita sem aprovação')
+            .type('Trilha Automação - paga com aprovação', { delay: 50 })
+            .should('have.value', 'Trilha Automação - paga com aprovação')
 
         //seleciona o código
         cy.get('input[ng-model="currentTrail.externalId"]')
@@ -362,7 +368,7 @@ describe("Teste - Login", () => {
 
         //seleciona o treinamento
         cy.get('[model="currentContent.course"] > .multiselect > .border > .ui-select-match > .btn-default').type('teste');
-        cy.get('#ui-select-choices-row-38-0').click();
+        cy.get('#ui-select-choices-row-39-0').click();
         cy.get('.start > .btn-swipe-accent > ng-transclude > .ng-binding').click();
 
         //adcicionar turma
@@ -389,6 +395,13 @@ describe("Teste - Login", () => {
 
         // gratuidade
         cy.get('.class-price > :nth-child(1) > .icon-checkbox').click();
+
+
+        // VENCIMENTO: clique no INPUT real (não no ícone)
+        // Primeiro tenta encontrar o checkbox dentro do bloco "Deixar em branco"
+        cy.contains('label, span, div', 'Deixar em branco')
+            .filter(':visible')
+            .click();
 
 
         // SALVAR TURMA: clique + validação (ajuste o texto/resultado esperado)
