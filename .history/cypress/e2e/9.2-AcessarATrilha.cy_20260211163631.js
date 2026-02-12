@@ -40,21 +40,25 @@ describe("Teste - Login", () => {
         //Cancelar inscrição
         cy.get("[ng-class=\"{active: $state.current.name.includes('accessLink.content.showcase.id.modal.home')}\"] > .ng-binding").click();
         cy.get(`[ng-class="{active: isAtState('home.trails')}"]`).click();
-        cy.get('.actionsColumn > .middle > .btn-swipe-accent').click();
-        cy.get('[switch="modal.confirmCancelSubscription"] > .modal > :nth-child(2) > .modal-body > ng-transclude > .ng-pristine').type("motivo do cancelamento teste");
-        cy.get('[switch="modal.confirmCancelSubscription"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent').click();
-
-        cy.pause();
-
         
-        cy.get('.column > .approval-buttons > .btn-swipe-accent').click();
-        cy.get('.link-row > :nth-child(7) > .btn-swipe-accent').click();
-        cy.get('[switch="subscriptionCancelRequests.modal"] > .modal > .between > .btn').click();
-
-        
+        cy.contains('label, div, span', 'Trilha')
+        .parentsUntil('form, .modal, .content-box, .row')
+        .parent()
+        .within(() => {
+            cy.get('.multiselect input')
+            .filter(':visible')
+            .first()
+            .clear({ force: true })
+            .type('Trilha automação', { delay: 20, force: true });
         });
 
 
-    
+        cy.get('.title-bar > .multiselect > .btn').click();
+
+        
+
+
+
+    });
 });
 });

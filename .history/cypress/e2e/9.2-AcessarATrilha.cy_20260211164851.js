@@ -44,14 +44,21 @@ describe("Teste - Login", () => {
         cy.get('[switch="modal.confirmCancelSubscription"] > .modal > :nth-child(2) > .modal-body > ng-transclude > .ng-pristine').type("motivo do cancelamento teste");
         cy.get('[switch="modal.confirmCancelSubscription"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent').click();
 
-        cy.pause();
+        //verificar o status de cancelamento
+        cy.get('.training-card')
+        .should('contain.text', 'Trilha automação')
+        .and('contain.text', 'cancelado');
+        });
 
-        
-        cy.get('.column > .approval-buttons > .btn-swipe-accent').click();
-        cy.get('.link-row > :nth-child(7) > .btn-swipe-accent').click();
-        cy.get('[switch="subscriptionCancelRequests.modal"] > .modal > .between > .btn').click();
+        it.only("Aprovar cancelamento", () => {
+        //aprovar cancelamento
+        cy.wait(2000);
+        cy.get('.avatar').click();
+        cy.get(':nth-child(4) > .menu-option > ng-transclude > .icon-pointer-right').click();
+        cy.get(':nth-child(4) > .user-options-items > :nth-child(2) > ng-transclude > .ng-binding').click();
 
-        
+        cy.get(':nth-child(2) > .approval-box > .column > .approval-buttons > .btn-swipe-accent > ng-transclude > .ng-binding').click();
+
         });
 
 

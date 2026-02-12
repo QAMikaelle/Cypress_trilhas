@@ -46,12 +46,12 @@ describe("Teste - Login", () => {
 
         cy.pause();
 
-        
-        cy.get('.column > .approval-buttons > .btn-swipe-accent').click();
-        cy.get('.link-row > :nth-child(7) > .btn-swipe-accent').click();
-        cy.get('[switch="subscriptionCancelRequests.modal"] > .modal > .between > .btn').click();
+        cy.get('.avatar').click();
+        cy.get(':nth-child(4) > .menu-option > ng-transclude > .icon-pointer-right').click();
+        cy.get(':nth-child(4) > .user-options-items > :nth-child(2) > ng-transclude > .ng-binding').click();
 
-        
+        cy.get(':nth-child(2) > .approval-box > .column > .approval-buttons > .btn-swipe-accent > ng-transclude > .ng-binding').click();
+
         });
 
 

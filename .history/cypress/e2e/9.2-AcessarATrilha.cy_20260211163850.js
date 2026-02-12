@@ -44,17 +44,8 @@ describe("Teste - Login", () => {
         cy.get('[switch="modal.confirmCancelSubscription"] > .modal > :nth-child(2) > .modal-body > ng-transclude > .ng-pristine').type("motivo do cancelamento teste");
         cy.get('[switch="modal.confirmCancelSubscription"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent').click();
 
-        cy.pause();
-
-        
-        cy.get('.column > .approval-buttons > .btn-swipe-accent').click();
-        cy.get('.link-row > :nth-child(7) > .btn-swipe-accent').click();
-        cy.get('[switch="subscriptionCancelRequests.modal"] > .modal > .between > .btn').click();
-
-        
-        });
 
 
-    
+    });
 });
 });
