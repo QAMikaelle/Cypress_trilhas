@@ -81,15 +81,11 @@ cy.wait(2000)
     cy.get(':nth-child(2) > [colspan="5"] > .btn-swipe-accent').click(); //novo treinamento
     //TEM QUE CLICAR PRA ELE ESCREVER O NOME
     cy.get(':nth-child(3) > :nth-child(2) > .content-info-container > [model="currentContent.course"] > .multiselect > .border > .ui-select-match > .btn-default').type("teste"); //digitar nome do treinamento
-    cy.wait(5000); //espera para carregar o documento -> TEM QUE CLICAR MANUALMENTE
+    cy.wait(5000); //espera para carregar o documento
     cy.get(':nth-child(3) > :nth-child(7) > .start > .btn-swipe-accent > ng-transclude > .ng-binding').click(); //adicionar documento
 
     //Adicionar avalição
-     cy.get('[colspan="5"] > .btn-swipe-accent')
-        .filter(':visible')
-        .first()
-        .click(); 
-
+     cy.get('[colspan="5"] > .btn-swipe-accent').click(); //novo conteúdo
      cy.get('.pv-5 > .w-100').click(); //selecionar conteúdo
      cy.get('.open > .ui-select-choices > :nth-child(2)').click(); //escolher conteúdo
     //TEM QUE CLICAR PRA ELE ESCREVER O NOME

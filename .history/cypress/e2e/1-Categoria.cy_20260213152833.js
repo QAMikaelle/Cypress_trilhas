@@ -50,7 +50,6 @@ describe("Teste - Login", () => {
 
 it("Nova Subcategoria", () => {
 
-  cy.wait(5000); //espera para garantir que a categoria foi criada
     //Abrir menu de trilhas
       cy.get('[title="Trilhas"] > .sideitem').click();
 

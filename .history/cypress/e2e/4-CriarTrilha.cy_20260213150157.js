@@ -88,8 +88,8 @@ cy.wait(2000)
      cy.get('[colspan="5"] > .btn-swipe-accent')
         .filter(':visible')
         .first()
-        .click(); 
-
+        .click(); //novo conteúdo
+        
      cy.get('.pv-5 > .w-100').click(); //selecionar conteúdo
      cy.get('.open > .ui-select-choices > :nth-child(2)').click(); //escolher conteúdo
     //TEM QUE CLICAR PRA ELE ESCREVER O NOME

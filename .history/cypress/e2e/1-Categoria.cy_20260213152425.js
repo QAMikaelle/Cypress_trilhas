@@ -1,3 +1,7 @@
+/* This JavaScript script is a test script written using Cypress for end-to-end testing. Here's a
+breakdown of what the script is doing: */
+/* This is a test script written in JavaScript using Cypress for end-to-end testing. Here's a breakdown
+of what the script is doing: */
 /// <reference types="cypress" />
 
 Cypress.on('uncaught:exception', (err) => {
@@ -7,7 +11,7 @@ Cypress.on('uncaught:exception', (err) => {
 });
 
 describe("Teste - Login", () => {
-  beforeEach(() => {
+  before(() => {
         //Entra na página de login
         cy.visit("https://www.hml.lector.live/lector_suporte/showcase/2257");
         cy.contains("button", "Entrar").click();
@@ -35,15 +39,15 @@ describe("Teste - Login", () => {
         .should('not.be.disabled')
         .focus()
         .clear({ force: true })
-        .type('Categoria 05/01', { delay: 30, force: true })
-        .should('have.value', 'Categoria 05/01');
+        .type('Categoria 22/01', { delay: 30, force: true })
+        .should('have.value', 'Categoria 22/01');
 
       // Salvar categoria
       cy.get('[switch="modal.createCategory"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent').click();
       cy.wait(5000); //espera para salvar a categoria
 
       // Validar criação da categoria
-      cy.contains('Categoria 05/01').should('be.visible'); 
+      cy.contains('Categoria 22/01').should('be.visible'); 
 });
 
 it("Nova Subcategoria", () => {
@@ -52,7 +56,7 @@ it("Nova Subcategoria", () => {
       cy.get('[title="Trilhas"] > .sideitem').click();
 
     //Selecionar categoria criada
-    cy.contains('Categoria 05/01', { timeout: 60000 })
+    cy.contains('Nova Categoria 05/01/26', { timeout: 60000 })
       .filter(':visible')
       .first()
       .scrollIntoView()
@@ -70,15 +74,15 @@ it("Nova Subcategoria", () => {
       .should('not.be.disabled')
       .focus()
       .clear({ force: true })
-      .type('Subcategoria 05/01', { delay: 30, force: true })
-      .should('have.value', 'Subcategoria 05/01');
+      .type('Subcategoria 22/01', { delay: 30, force: true })
+      .should('have.value', 'Subcategoria 22/01');
 
     // Salvar subcategoria
     cy.get('[switch="modal.createCategory"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent').click();
     cy.wait(5000); //espera para salvar a subcategoria
     
     // Validar criação da subcategoria
-    cy.contains('Subcategoria 05/01').should('be.visible');
+    cy.contains('Subcategoria 22/01').should('be.visible');
     });
   });
 });
