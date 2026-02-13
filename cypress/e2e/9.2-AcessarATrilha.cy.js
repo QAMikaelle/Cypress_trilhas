@@ -46,7 +46,8 @@ describe("Teste - Login", () => {
 
         cy.pause();
 
-        
+        //Clica no icone de notivicações
+        cy.get('button[title="Notificações"]', { timeout: 60000 }).should('be.visible').click();
         cy.get('.column > .approval-buttons > .btn-swipe-accent').click();
         cy.get('.link-row > :nth-child(7) > .btn-swipe-accent').click();
         cy.get('[switch="subscriptionCancelRequests.modal"] > .modal > .between > .btn').click();

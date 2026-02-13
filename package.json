@@ -2,7 +2,7 @@
   "name": "cypress-estudo",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "",
+  "type": "commonjs",
   "engines": {
     "node": "v22.14.0"
   },
@@ -10,9 +10,17 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "![Cypress](https://img.shields.io/badge/-cypress-%23E5E5E5?style=for-the-badge&logo=cypress&logoColor=058a5e)\r ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)",
   "devDependencies": {
     "@types/node": "^22.13.13",
-    "cypress": "^15.8.1"
-  }
+    "cypress": "^15.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QAMikaelle/Cypress_trilhas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/QAMikaelle/Cypress_trilhas/issues"
+  },
+  "homepage": "https://github.com/QAMikaelle/Cypress_trilhas#readme"
 }
