@@ -80,9 +80,11 @@ describe("Teste - Assistir Trilha (Aluno)", () => {
             .click();
         cy.wait(5000);
 
-        // ========== CLICAR EM INICIAR AVALIAÇÃO ==========
-        cy.contains('button', 'Iniciar avaliação', { timeout: 15000 })
-            .should('be.visible')
+        // ========== CLICAR EM INICIAR AVALIAÇÃO OU ACESSAR ==========
+        // O botão pode aparecer como "Iniciar avaliação" ou "Acessar" dependendo do estado
+        cy.contains('button', /Iniciar avaliação|Acessar/, { timeout: 15000 })
+            .filter(':visible')
+            .first()
             .click();
         cy.wait(3000);
 
