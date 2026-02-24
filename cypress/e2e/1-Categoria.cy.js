@@ -10,16 +10,24 @@ Cypress.on('uncaught:exception', (err) => {
   }
 });
 
+
+const Administrador = {
+  email: 'suporte2@lectortec.com.br',
+  senha: '#C4iocl4r413',
+  perfil: 'Administrador'
+};
+
+
 describe("Teste - Login", () => {
   before(() => {
-        //Entra na página de login
-        cy.visit("https://www.hml.lector.live/lector_suporte/showcase/2257");
-        cy.contains("button", "Entrar").click();
-    
+    //Entra na página de login
+    cy.visit("https://www.hml.lector.live/lector_suporte/showcase/2257");
+    cy.contains("button", "Entrar").click();
+
     //Faz login
-        cy.get('[style="z-index: 26;"] > :nth-child(1) > :nth-child(1) > .popup > :nth-child(1) > .ng-pristine').type("qualidade@lectortec.com.br");
-        cy.get("#login_password_navbar").type("c8d593QGXOkjRjC");
-        cy.get(".popup").contains("button", "Entrar").click();
+    cy.get('[style="z-index: 26;"] > :nth-child(1) > :nth-child(1) > .popup > :nth-child(1) > .ng-pristine').type("qualidade@lectortec.com.br");
+    cy.get("#login_password_navbar").type("c8d593QGXOkjRjC");
+    cy.get(".popup").contains("button", "Entrar").click();
   });
 
   context("Teste Categoria", () => {
@@ -46,42 +54,42 @@ describe("Teste - Login", () => {
       cy.get('[switch="modal.createCategory"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent').click();
       cy.wait(5000); //espera para salvar a categoria
 
-});
+    });
 
-it("Nova Subcategoria", () => {
+    it("Nova Subcategoria", () => {
 
-  cy.wait(5000); //espera para garantir que a categoria foi criada
-    //Abrir menu de trilhas
+      cy.wait(5000); //espera para garantir que a categoria foi criada
+      //Abrir menu de trilhas
       cy.get('[title="Trilhas"] > .sideitem').click();
 
-    //Selecionar categoria criada
-    cy.contains('Nova Categoria 05/01/26', { timeout: 60000 })
-      .filter(':visible')
-      .first()
-      .scrollIntoView()
-      .should('be.visible')
-      .parents('li') // sobe até o nó da árvore
-      .click();
+      //Selecionar categoria criada
+      cy.contains('Nova Categoria 05/01/26', { timeout: 60000 })
+        .filter(':visible')
+        .first()
+        .scrollIntoView()
+        .should('be.visible')
+        .parents('li') // sobe até o nó da árvore
+        .click();
 
-    // Clicar em adicionar subcategoria
-    cy.get('.node-selected > .tree-icons > .icon-add').click();
+      // Clicar em adicionar subcategoria
+      cy.get('.node-selected > .tree-icons > .icon-add').click();
 
-    // Preencher nome da subcategoria
-    cy.get('input[placeholder="Nova categoria"]', { timeout: 60000 })
-      .filter(':visible')
-      .first()
-      .should('not.be.disabled')
-      .focus()
-      .clear({ force: true })
-      .type('Subcategoria 22/01', { delay: 30, force: true })
-      .should('have.value', 'Subcategoria 22/01');
+      // Preencher nome da subcategoria
+      cy.get('input[placeholder="Nova categoria"]', { timeout: 60000 })
+        .filter(':visible')
+        .first()
+        .should('not.be.disabled')
+        .focus()
+        .clear({ force: true })
+        .type('Subcategoria 22/01', { delay: 30, force: true })
+        .should('have.value', 'Subcategoria 22/01');
 
-    // Salvar subcategoria
-    cy.get('[switch="modal.createCategory"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent').click();
-    cy.wait(5000); //espera para salvar a subcategoria
-    
-    // Validar criação da subcategoria
-    cy.contains('Subcategoria 22/01').should('be.visible');
+      // Salvar subcategoria
+      cy.get('[switch="modal.createCategory"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent').click();
+      cy.wait(5000); //espera para salvar a subcategoria
+
+      // Validar criação da subcategoria
+      cy.contains('Subcategoria 22/01').should('be.visible');
     });
   });
 });

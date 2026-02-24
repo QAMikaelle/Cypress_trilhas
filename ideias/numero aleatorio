@@ -1,0 +1,8 @@
+const RANDOM_ID = Math.floor(1000 + Math.random() * 9000); // ex: 4821
+
+const TRAIL_NAME = `Trilha automação caio ${RANDOM_ID}`;
+
+// Resultado: "Trilha automação caio 4821"
+
+a ideia é criar varias trilhas diferentes para na hora de buscar pra editar não pegar a trilha errada, pois sempre que rodar a automação
+ele vai criar uma trilha diferente eu posso usar depois, pra criar varias trilhas de uma vez
