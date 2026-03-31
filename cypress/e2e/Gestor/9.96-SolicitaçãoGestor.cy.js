@@ -9,7 +9,6 @@ Cypress.on('uncaught:exception', (err) => {
 
 // ==================== DADOS ====================
 const TRAIL_URL = 'https://www.hml.lector.live/lector_suporte/showcase/2294/m/trails/8359/stages';
-const TRAIL_ADMIN_URL = 'https://www.hml.lector.live/lector_suporte/trails/8359/general';
 const LOGIN_URL = 'https://www.hml.lector.live/lector_suporte/subscribe/login';
 
 const alunos = [
@@ -20,10 +19,10 @@ const alunos = [
     { email: 'caio222222@sharklasers.com', senha: '123', nome: 'caio222222' },
 ];
 
-const administrador = {
+const gestor = {
     email: 'suporte2@lectortec.com.br',
     senha: '#C4iocl4r413',
-    perfil: 'Administrador - Todos'
+    perfil: 'Gestor - Unidades'
 };
 
 // ==================== FUNÇÕES AUXILIARES ====================
@@ -61,6 +60,7 @@ function fazerLogin(email, senha) {
  * Troca o perfil do usuário para o perfil desejado
  */
 function trocarPerfil(perfilDesejado) {
+    // Extrai o nome base do perfil (ex: "Gestor - Unidades" => "Gestor", "Administrador - Todos" => "Administrador")
     const nomeBase = perfilDesejado.split(' - ')[0];
 
     cy.get('.current-profile', { timeout: 15000 })
@@ -103,7 +103,7 @@ function garantirPerfilAluno() {
                     cy.wait(3000);
                     cy.contains('div', 'Selecionar perfil', { timeout: 15000 }).click();
                     cy.wait(3000);
-                    cy.contains('#user-options .option.item', 'Aluno - Todos', { timeout: 15000 })
+                    cy.contains('#user-options .option.item', 'Aluno - Unidades', { timeout: 15000 })
                         .click({ force: true });
                     cy.wait(8000);
                 }
@@ -113,7 +113,7 @@ function garantirPerfilAluno() {
             cy.wait(3000);
             cy.contains('div', 'Selecionar perfil', { timeout: 15000 }).click();
             cy.wait(3000);
-            cy.contains('#user-options .option.item', 'Aluno - Todos', { timeout: 15000 })
+            cy.contains('#user-options .option.item', 'Aluno - Unidades', { timeout: 15000 })
                 .click({ force: true });
             cy.wait(8000);
         }
@@ -160,77 +160,60 @@ function alunoSolicitaInscricao(aluno) {
 }
 
 /**
- * Administrador faz login, troca perfil, acessa a trilha via Gerenciar e toma ação (Aprovar/Recusar)
+ * Gestor faz login, troca perfil, acessa solicitações e toma ação (Aprovar/Recusar)
  */
-function adminProcessaSolicitacoes(acao) {
-    // Login do Administrador
-    fazerLogin(administrador.email, administrador.senha);
+function gestorProcessaSolicitacoes(acao) {
+    // Login do Gestor
+    fazerLogin(gestor.email, gestor.senha);
 
-    // Trocar para perfil Administrador
-    trocarPerfil(administrador.perfil);
+    // Trocar para perfil Gestor Unidades
+    trocarPerfil(gestor.perfil);
     cy.wait(5000);
 
-    // Acessar a página da trilha como admin
-    cy.visit(TRAIL_ADMIN_URL);
+    // Acessar aba Solicitações de Matrícula
+    cy.get('a[ui-sref="accessLink.content.home.subscriptionApprovals()"]', { timeout: 15000 })
+        .should('be.visible')
+        .click();
     cy.wait(8000);
 
-    // Clicar no botão "Gerenciar"
-    cy.contains('span', 'Gerenciar', { timeout: 15000 })
-        .should('be.visible')
-        .click();
-    cy.wait(5000);
-
-    // Clicar na aba "Solicitações de matrícula" dentro do modal
-    cy.get('a[ng-click="selectManageSubscriptionsTab(\'subscriptionRequests\');"]', { timeout: 15000 })
-        .should('be.visible')
-        .click();
-    cy.wait(5000);
-
-    // Para cada aluno, buscar e selecionar na tabela dentro do modal
+    // Para cada aluno, buscar e selecionar na tabela
     alunos.forEach((aluno) => {
+        cy.get('#approvals-table', { timeout: 20000 }).should('exist');
         cy.wait(3000);
 
         cy.get('body').then(($body) => {
-            const alunoNaTabela = $body.find(`td:contains("${aluno.email}")`).length > 0;
+            const alunoNaTabela = $body.find(`#approvals-table td:contains("${aluno.email}")`).length > 0;
 
             if (alunoNaTabela) {
-                cy.contains('td', aluno.email)
+                cy.contains('#approvals-table td', aluno.email)
                     .parent('tr')
                     .find('td.select-checkbox')
                     .click();
                 cy.wait(2000);
 
-                cy.log(`☑️ Aluno ${aluno.email} selecionado para ${acao} (Admin)`);
+                cy.log(`☑️ Aluno ${aluno.email} selecionado para ${acao}`);
             } else {
-                cy.log(`⚠️ Aluno ${aluno.email} não encontrado na tabela (Admin)`);
+                cy.log(`⚠️ Aluno ${aluno.email} não encontrado na tabela de aprovações`);
             }
         });
     });
 
-    // Clicar no botão de ação (Aprovar ou Recusar) dentro do modal de gerenciamento
-    if (acao === 'Aprovar') {
-        cy.get('button[ng-click="modal.approveBatchSubscriptions = true"]', { timeout: 15000 })
-            .should('be.visible')
-            .click();
-    } else {
-        cy.get('button[ng-click="modal.declineBatchSubscriptions = true"]', { timeout: 15000 })
-            .should('be.visible')
-            .click();
-    }
+    // Clicar no botão de ação (Aprovar ou Recusar)
+    cy.contains('button', acao, { timeout: 15000 })
+        .should('be.visible')
+        .click();
     cy.wait(5000);
 
     // Confirmar ação no modal de confirmação
-    // O modal do Admin usa batchProcessSubscriptionsRequests(true) para Aprovar e (false) para Recusar
-    const ngClickConfirm = acao === 'Aprovar'
-        ? 'batchProcessSubscriptionsRequests(true)'
-        : 'batchProcessSubscriptionsRequests(false)';
-    cy.get(`button[ng-click="${ngClickConfirm}"]`, { timeout: 15000 })
+    // Modal pergunta: "Você tem certeza que deseja aprovar/recusar as solicitações?"
+    // Botão de confirmação tem ng-click="confirmAction()" com span contendo "Aprovar" ou "Recusar"
+    cy.contains('button[ng-click="confirmAction()"]', acao, { timeout: 15000 })
         .filter(':visible')
         .first()
         .click({ force: true });
     cy.wait(8000);
 
-    cy.log(`✅ Administrador executou ação "${acao}" para todos os alunos!`);
+    cy.log(`✅ Gestor executou ação "${acao}" para todos os alunos!`);
 }
 
 /**
@@ -273,7 +256,7 @@ function alunoValidaAprovacao(aluno) {
 
 // ==================== TESTES ====================
 
-describe("Teste - Solicitação de Matrícula com Aprovação do Administrador", () => {
+describe("Teste - Solicitação de Matrícula com Aprovação do Gestor", () => {
 
     // ============================================================
     // PARTE 1: Alunos solicitam inscrição (1ª vez)
@@ -289,12 +272,12 @@ describe("Teste - Solicitação de Matrícula com Aprovação do Administrador",
 
 
     // ============================================================
-    // PARTE 2: Administrador RECUSA todas as solicitações
+    // PARTE 2: Gestor RECUSA todas as solicitações
     // ============================================================
-    context("1ª Rodada - Administrador RECUSA as solicitações", () => {
+    context("1ª Rodada - Gestor RECUSA as solicitações", () => {
 
-        it("Administrador faz login, troca perfil e RECUSA todos os alunos", () => {
-            adminProcessaSolicitacoes('Recusar');
+        it("Gestor faz login, troca perfil e RECUSA todos os alunos", () => {
+            gestorProcessaSolicitacoes('Recusar');
         });
     });
 
@@ -313,23 +296,23 @@ describe("Teste - Solicitação de Matrícula com Aprovação do Administrador",
 
 
     // ============================================================
-    // PARTE 4: Administrador APROVA todas as solicitações
+    // PARTE 4: Gestor APROVA todas as solicitações
     // ============================================================
-    context("2ª Rodada - Administrador APROVA as solicitações", () => {
+    context("2ª Rodada - Gestor APROVA as solicitações", () => {
 
-        it("Administrador faz login, troca perfil e APROVA todos os alunos", () => {
-            adminProcessaSolicitacoes('Aprovar');
+        it("Gestor faz login, troca perfil e APROVA todos os alunos", () => {
+            gestorProcessaSolicitacoes('Aprovar');
         });
     });
 
 
     // ============================================================
-    // PARTE 5: Alunos validam acesso final (Finalizar Trilha)
+    // PARTE 5: Alunos validam acesso (Finalizar Trilha)
     // ============================================================
-    context("Validação Final - Alunos verificam aprovação do Administrador", () => {
+    context("Validação Gestor - Alunos verificam aprovação", () => {
 
         alunos.forEach((aluno, index) => {
-            it(`Aluno ${index + 1} (${aluno.email}) valida aprovação do Administrador`, () => {
+            it(`Aluno ${index + 1} (${aluno.email}) valida aprovação do Gestor`, () => {
                 alunoValidaAprovacao(aluno);
             });
         });

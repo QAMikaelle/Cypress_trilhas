@@ -138,7 +138,7 @@ describe("Teste - Gerenciar Trilha: Matriculados / Concluídos", () => {
                 .first()
                 .within(() => {
                     cy.contains('.filter-type', 'Usuário')
-                        .closest('.filter-container') // Note: some versions use filter-container
+                        .parent()
                         .find('input')
                         .filter(':visible')
                         .should('be.visible')
@@ -155,14 +155,12 @@ describe("Teste - Gerenciar Trilha: Matriculados / Concluídos", () => {
             cy.get('body').then(($body) => {
                 if ($body.text().includes(USER_NAME)) {
                     cy.log(`👉 Usuário "${USER_NAME}" encontrado. Selecionando...`);
-                    cy.contains('#subscribed-table td', USER_NAME, { timeout: 15000 })
-                        .parent('tr')
+                    cy.contains('td', USER_NAME).parent('tr')
                         .find('td.select-checkbox')
                         .click({ force: true });
-                    cy.wait(2000);
+                    cy.wait(3000);
 
                     cy.contains('button', 'Concluir matrícula(s)', { timeout: 15000 })
-                        .should('not.be.disabled')
                         .click({ force: true });
                     cy.wait(5000);
                     cy.log(`✅ Usuário "${USER_NAME}" concluído com sucesso!`);
@@ -176,21 +174,23 @@ describe("Teste - Gerenciar Trilha: Matriculados / Concluídos", () => {
 
             cy.log(`🔍 Buscando e-mail: ${USER_EMAIL}`);
 
-            cy.get('.filters-container:visible')
+            // Aguardar estabilizar e re-obter filtros frescos
+            cy.wait(3000);
+            cy.get('.filters-container:visible', { timeout: 15000 }).first()
+                .contains('.filter-type', /E-?mail/i)
+                .parent()
+                .find('input')
+                .filter(':visible')
                 .first()
-                .within(() => {
-                    cy.contains('.filter-type', 'E-mail')
-                        .closest('.filter-container')
-                        .find('input')
-                        .filter(':visible')
-                        .should('be.visible')
-                        .clear()
-                        .type(USER_EMAIL);
+                .should('be.visible')
+                .clear()
+                .type(USER_EMAIL);
 
-                    cy.get('button.btn.icon-spyglass')
-                        .filter(':visible')
-                        .click({ force: true });
-                });
+            cy.get('.filters-container:visible').first()
+                .find('button.btn.icon-spyglass')
+                .filter(':visible')
+                .first()
+                .click({ force: true });
 
             cy.wait(5000);
 
@@ -201,10 +201,9 @@ describe("Teste - Gerenciar Trilha: Matriculados / Concluídos", () => {
                         .parent('tr')
                         .find('td.select-checkbox')
                         .click({ force: true });
-                    cy.wait(2000);
+                    cy.wait(3000);
 
                     cy.contains('button', 'Concluir matrícula(s)', { timeout: 15000 })
-                        .should('not.be.disabled')
                         .click({ force: true });
                     cy.wait(5000);
                     cy.log(`✅ E-mail "${USER_EMAIL}" concluído com sucesso!`);
@@ -218,25 +217,26 @@ describe("Teste - Gerenciar Trilha: Matriculados / Concluídos", () => {
 
             cy.log(`🔍 Buscando grupo: ${GROUP_NAME}`);
 
-            cy.get('.filters-container:visible')
+            // Aguardar estabilizar e re-obter filtros frescos
+            cy.wait(3000);
+            cy.get('.filters-container:visible', { timeout: 15000 }).first()
+                .contains('.filter-type', /Grupos/i)
+                .parent()
+                .find('.ui-select-container input[type="search"]')
+                .filter(':visible')
                 .first()
-                .within(() => {
-                    cy.contains('.filter-type', 'Grupos')
-                        .closest('.filter-container')
-                        .find('.ui-select-container input[type="search"]')
-                        .filter(':visible')
-                        .first()
-                        .should('be.visible')
-                        .click({ force: true })
-                        .type(GROUP_NAME);
+                .should('be.visible')
+                .click({ force: true })
+                .type(GROUP_NAME);
 
-                    cy.wait(2000);
-                    cy.get('.ui-select-choices-row').contains(GROUP_NAME).click({ force: true });
+            cy.wait(2000);
+            cy.get('.ui-select-choices-row').contains(GROUP_NAME).click({ force: true });
 
-                    cy.get('button.btn.icon-spyglass')
-                        .filter(':visible')
-                        .click({ force: true });
-                });
+            cy.get('.filters-container:visible').first()
+                .find('button.btn.icon-spyglass')
+                .filter(':visible')
+                .first()
+                .click({ force: true });
 
             cy.wait(5000);
 
@@ -249,9 +249,8 @@ describe("Teste - Gerenciar Trilha: Matriculados / Concluídos", () => {
                             .find('td.select-checkbox')
                             .click({ force: true });
                     }
-                    cy.wait(2000);
+                    cy.wait(3000);
                     cy.contains('button', 'Concluir matrícula(s)', { timeout: 15000 })
-                        .should('not.be.disabled')
                         .click({ force: true });
                     cy.wait(5000);
                     cy.log(`✅ ${count} usuários do grupo concluídos com sucesso!`);

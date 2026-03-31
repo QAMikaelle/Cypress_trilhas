@@ -10,7 +10,7 @@ Cypress.on('uncaught:exception', (err) => {
 describe("Teste - Login", () => {
     beforeEach(() => {
         //Entra na página de login
-            cy.visit("https://www.hml.lector.live/esmp/subscribe/login");
+            cy.visit("https://www.hml.lector.live/ext/subscribe/login");
     
         //Faz login
             cy.get('[name="login_username"]').type("qualidade@lectortec.com.br");

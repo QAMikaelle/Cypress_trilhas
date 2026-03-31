@@ -293,6 +293,36 @@ describe("Teste - Gerenciar Trilha: Filtros de Usuário e E-mail", () => {
             });
 
             cy.log('✅ Teste de filtro por Grupos e associação múltipla concluído!');
+           
+            //Verficar pelo filtro de cargo
+            // Voltar para a aba "Não matriculados"
+            cy.contains('a', 'Não matriculados', { timeout: 15000, log: false })
+                .click({ force: true, log: false });
+            cy.wait(5000, { log: false });
+            // Clicar no campo de busca de Cargo para    abrir o dropdown
+            cy.contains('.filter-type', 'Cargos', { timeout: 15000, log: false })
+                .closest('.filters-container', { log: false })
+                .find('input[ng-model="filter.text"]', { log: false })
+                .should('be.visible')
+                .clear({ log: false })
+                .type('Cargo - 2', { log: false });
+            // Clicar na lupinha para aplicar o filtro
+            cy.contains('.filter-type', 'Cargos', { timeout: 15000, log: false })
+                .closest('.filters-container', { log: false })
+                .find('button.btn.icon-spyglass', { log: false })
+                .filter(':visible', { log: false })
+                .first({ log: false })
+                .click({ force: true, log: false });
+            cy.wait(5000, { log: false });
+            // Verificar se os 5 usuários estão na tabela de não matriculados
+            userNames.forEach((name) => {
+                cy.contains('#not-subscribed-table td', name, { timeout: 15000, log: false })
+                    .should('be.visible');
+                cy.log(`✅ Usuário "${name}" (do Grupo - 2) confirmado em Não matriculados!`);
+            });
+
+           
+           
             cy.log('✅ Teste concluído com sucesso!');
         });
     });

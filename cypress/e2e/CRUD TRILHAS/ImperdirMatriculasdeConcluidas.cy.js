@@ -2,36 +2,47 @@
 
 // Ignora erros internos da aplicação
 Cypress.on('uncaught:exception', (err) => {
-    if (err.message.includes('unselectable') || err.message.includes('firstElementChild') || err.message.includes('parentNode') || err.message.includes('getColor') || err.message.includes("reading '0'") || err.message.includes('remove') || err.message.includes('then') || err.message.includes('frameElement')) {
+    if (
+        err.message.includes('unselectable') ||
+        err.message.includes('firstElementChild') ||
+        err.message.includes('parentNode') ||
+        err.message.includes('getColor') ||
+        err.message.includes("reading '0'") ||
+        err.message.includes('remove') ||
+        err.message.includes('then') ||
+        err.message.includes('frameElement')
+    ) {
         return false;
     }
 });
 
+
 // ==================== DADOS ====================
+
 const RANDOM_ID = Math.floor(1000 + Math.random() * 9000); // 4 dígitos aleatórios
 const LOGIN_URL = 'https://www.hml.lector.live/lector_suporte/subscribe/login';
-const TRAIL_NAME = `Trilha automação caio ${RANDOM_ID}`;
+const TRAIL_NAME = `Trilha automação caio impedir matricula de concluidas ${RANDOM_ID}`;
 const CATEGORY_NAME = 'Cypress Caio';
 const TRAIL_DESCRIPTION = 'aqui temos uma descrição da automação';
-const TRAINING_NAME = 'AVALIACAO COM CORREÇÃO';
-const EVALUATION_NAME = '16.12.24 Avaliação teste';
-const DOCUMENT_NAME = '06.4 - Módulo Facebook e Instagram Ads';
+const TRAINING_NAME = 'teste lector 100ççç';
+const EVALUATION_NAME = 'AVALIAÇÃO DE REAÇÃO TODOS NA MESMA PÁGINA/SEM CONFIGURAÇÕES/QUESTÕES 02.12.2024';
+const DOCUMENT_NAME = '06.1 - Exercicios Checklists E-commerce1';
 const MIN_GRADE = '75';
 const FUNCTION_NAME = 'Função 2';
 const COVER_IMAGES = [
     'cypress/fixtures/Capa.jpg',
     'cypress/fixtures/capa 2.jpg',
     'cypress/fixtures/capa 3.png',
-    'cypress/fixtures/capa 4.jpg'
-
+    'cypress/fixtures/capa 4.jpg',
 ];
 const IMPORT_TRAIL_NAME = 'trilha com video';
 const CERTIFICATE_NAME = 'Certificado em duas páginas - Trilha #CODIGO_VALIDACAO#';
 
 const admin = {
-    email: 'suporte2@lectortec.com.br',
-    senha: '#C4iocl4r413'
+    email: Cypress.env('USERNAME'),
+    senha: Cypress.env('PASSWORD'),
 };
+
 
 // ==================== FUNÇÕES AUXILIARES ====================
 
@@ -128,7 +139,7 @@ function navegarParaTrilha() {
     cy.get('button[ng-click="filterText()"]').click();
     cy.wait(3000);
 
-    // Clicar no card da trilha encontrada using robust regex
+    // Clicar no card da trilha encontrada usando regex
     cy.contains('.card-title', new RegExp(TRAIL_NAME, 'i'), { timeout: 15000 })
         .should('be.visible')
         .click();
@@ -138,7 +149,7 @@ function navegarParaTrilha() {
     cy.get('button[ng-click="editTrail(trail)"]', { timeout: 15000 })
         .should('be.visible')
         .click();
-    cy.wait(5000); // Aumentado para garantir carregamento total do editor
+    cy.wait(5000); // Aguarda carregamento total do editor
 
     cy.log('✅ Trilha encontrada e aberta para edição!');
 }
@@ -196,7 +207,7 @@ function criarTurma(nome, { gratuita = false, aprovacaoGestor = false, preco = n
 
 // ==================== TESTES ====================
 
-describe("Teste - Criar Trilha Sem Versionamento", () => {
+describe("14.2 - Impedir Matrículas de Concluídas", () => {
 
     // ============================================================
     // PARTE 1: Criar trilha + Info gerais + Importar etapa + Salvar
@@ -206,13 +217,13 @@ describe("Teste - Criar Trilha Sem Versionamento", () => {
         it("Cria nova trilha, preenche dados gerais, importa etapa e salva", () => {
             fazerLogin();
 
-            // Navegar para Trilhas
+            // ---- Navegar para Trilhas ----
             cy.get('[title="Trilhas"] > .sideitem', { timeout: 15000 })
                 .should('be.visible')
                 .click();
             cy.wait(2000);
 
-            // Botão criar trilha
+            // ---- Botão criar trilha ----
             cy.get('.title-bar > .btn-icon', { timeout: 15000 })
                 .should('be.visible')
                 .click();
@@ -225,7 +236,6 @@ describe("Teste - Criar Trilha Sem Versionamento", () => {
                 .clear({ force: true })
                 .type(TRAIL_NAME, { delay: 30, force: true })
                 .should('have.value', TRAIL_NAME);
-
             cy.log('✅ Nome da trilha preenchido!');
 
             // ---- Aproveitamento mínimo (75%) ----
@@ -233,8 +243,15 @@ describe("Teste - Criar Trilha Sem Versionamento", () => {
                 .scrollIntoView()
                 .clear()
                 .type(MIN_GRADE);
-
             cy.log('✅ Aproveitamento mínimo definido para 75%!');
+
+            // ---- Impedir matrículas de serem concluídas ----
+            cy.get('input[ng-model="currentTrail.blockFinishSubscriptions"]', { timeout: 15000 })
+                .parent('label.checkbox')
+                .find('.icon-checkbox')
+                .scrollIntoView()
+                .click();
+            cy.log('✅ Opção "Impedir matrículas de serem concluídas" ativada!');
 
             // ---- Funções de treinamento ----
             cy.get('input.ui-select-search[placeholder="Escolha uma função de treinamento"]', { timeout: 15000 })
@@ -248,7 +265,6 @@ describe("Teste - Criar Trilha Sem Versionamento", () => {
                 .should('be.visible')
                 .click();
             cy.wait(1000);
-
             cy.log('✅ Função de treinamento adicionada!');
 
             // ---- Descrição (CKEditor) ----
@@ -262,7 +278,6 @@ describe("Teste - Criar Trilha Sem Versionamento", () => {
                         .clear()
                         .type(TRAIL_DESCRIPTION);
                 });
-
             cy.log('✅ Descrição da trilha preenchida!');
 
             // ---- Ir para aba Etapas e importar etapa ----
@@ -294,10 +309,9 @@ describe("Teste - Criar Trilha Sem Versionamento", () => {
                 .should('be.visible')
                 .click();
             cy.wait(3000);
-
             cy.log('✅ Etapa importada com sucesso!');
 
-            // ---- Salvar trilha ----
+            // ---- Salvar trilha (sem versionamento) ----
             cy.get('button[ng-click="setKeepEditingAfterSave(false)"]', { timeout: 15000 })
                 .should('be.visible')
                 .click();
@@ -322,7 +336,6 @@ describe("Teste - Criar Trilha Sem Versionamento", () => {
 
     // ============================================================
     // PARTE 2: Edições da trilha (capas, conteúdos, certificado, turmas)
-    // Login uma vez só e alterna entre navegar → editar → salvar
     // ============================================================
     context("Parte 2 - Editar trilha (capas, conteúdos, certificado, turmas)", () => {
 
@@ -394,7 +407,7 @@ describe("Teste - Criar Trilha Sem Versionamento", () => {
                 .click();
             cy.wait(2000);
 
-            // Adicionar conteúdo
+            // Salvar conteúdo
             cy.get('button[ng-click="saveContent(currentContent)"]', { timeout: 15000 })
                 .scrollIntoView()
                 .should('be.visible')
@@ -433,7 +446,7 @@ describe("Teste - Criar Trilha Sem Versionamento", () => {
                 .click();
             cy.wait(2000);
 
-            // Adicionar conteúdo
+            // Salvar conteúdo
             cy.get('button[ng-click="saveContent(currentContent)"]', { timeout: 15000 })
                 .scrollIntoView()
                 .should('be.visible')
@@ -472,7 +485,7 @@ describe("Teste - Criar Trilha Sem Versionamento", () => {
                 .click();
             cy.wait(2000);
 
-            // Adicionar conteúdo
+            // Salvar conteúdo
             cy.get('button[ng-click="saveContent(currentContent)"]', { timeout: 15000 })
                 .scrollIntoView()
                 .should('be.visible')
@@ -526,7 +539,7 @@ describe("Teste - Criar Trilha Sem Versionamento", () => {
                 .click();
             cy.wait(2000);
 
-            // Salvar a trilha
+            // Salvar trilha
             cy.get('button[ng-click="setKeepEditingAfterSave(false)"]', { timeout: 15000 })
                 .scrollIntoView()
                 .click({ force: true });
@@ -589,14 +602,17 @@ describe("Teste - Criar Trilha Sem Versionamento", () => {
 
             criarTurma('Gratuita com aprovação', { gratuita: true, aprovacaoGestor: true });
 
-
             // Salvar trilha
             cy.get('button[ng-click="setKeepEditingAfterSave(false)"]', { timeout: 15000 })
                 .scrollIntoView()
                 .click({ force: true });
             cy.wait(3000);
 
+            cy.log('✅ Turma Gratuita com Aprovação criada e salva!');
+
+            // ==========================================
             // 2.7 - Vincular Categoria
+            // ==========================================
             navegarParaTrilha();
 
             cy.log(`🔍 Procurando categoria: ${CATEGORY_NAME}`);
@@ -616,14 +632,12 @@ describe("Teste - Criar Trilha Sem Versionamento", () => {
                     cy.contains('.ui-select-choices-row', CATEGORY_NAME, { timeout: 15000 })
                         .should('be.visible')
                         .click({ force: true });
-                }
-                else if ($body.find('.tree-container').length > 0) {
+                } else if ($body.find('.tree-container').length > 0) {
                     cy.contains('.tree-item', CATEGORY_NAME, { timeout: 15000 })
                         .find('.icon-checkbox')
                         .scrollIntoView()
                         .click({ force: true });
-                }
-                else {
+                } else {
                     cy.contains('label', /Categoria/i).parent().within(() => {
                         cy.get('input, .ui-select-container').click({ force: true });
                         cy.wait(1000);
@@ -645,14 +659,11 @@ describe("Teste - Criar Trilha Sem Versionamento", () => {
                     cy.get('button[ng-click="saveTrail(false)"]').click();
                 }
             });
-
             cy.wait(5000);
             cy.log('✅ Categoria vinculada com sucesso!');
 
-            cy.log('✅ Turma Gratuita com Aprovação criada e salva!');
-
             // ==========================================
-            // 2.7 - Verificação final: buscar e abrir a trilha
+            // 2.8 - Verificação final: buscar e abrir a trilha
             // ==========================================
             cy.get('[title="Trilhas"] > .sideitem', { timeout: 15000 })
                 .click({ force: true });
